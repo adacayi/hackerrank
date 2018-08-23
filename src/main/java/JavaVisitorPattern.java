@@ -168,13 +168,13 @@ public class JavaVisitorPattern {
                 List<Integer> children;
 
                 if (!map.containsKey(first))
-                    map.put(first, new ArrayList<>());
+                    map.put(first, new ArrayList<Integer>());
 
                 children = map.get(first);
                 children.add(second);
 
                 if (!map.containsKey(second))
-                    map.put(second, new ArrayList<>());
+                    map.put(second, new ArrayList<Integer>());
 
                 children = map.get(second);
                 children.add(first);
