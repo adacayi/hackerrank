@@ -92,17 +92,18 @@ class SumInLeavesVisitor extends TreeVis {
 }
 
 class ProductOfRedNodesVisitor extends TreeVis {
-    private int result = 1;
+    public static final int MODULO = (int) (Math.pow(10, 9) + 7);
+    private long result = 1;
 
     public int getResult() {
-        return result;
+        return (int)result;
     }
 
     public void visitNode(TreeNode node) {
         int value = node.getValue();
         if (value == 0 || node.getColor() != Color.RED)
             return;
-        result = result * value % (int) (Math.pow(10, 9) + 7);
+        result = result * value % MODULO;
     }
 
     public void visitLeaf(TreeLeaf leaf) {
@@ -110,7 +111,7 @@ class ProductOfRedNodesVisitor extends TreeVis {
 
         if (value == 0 || leaf.getColor() != Color.RED)
             return;
-        result = result * value % (int) (Math.pow(10, 9) + 7);
+        result = result * value % MODULO;
     }
 }
 
