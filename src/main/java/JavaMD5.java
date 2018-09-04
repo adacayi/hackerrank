@@ -14,6 +14,6 @@ public class JavaMD5 {
             }
         }
         digest.update(message.getBytes());
-        return new BigInteger(1,digest.digest()).toString(16);
+        return String.format("%x", new BigInteger(1, digest.digest()));
     }
 }
