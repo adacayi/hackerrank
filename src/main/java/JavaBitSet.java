@@ -13,7 +13,7 @@ public class JavaBitSet {
                 sets[i] = new BitSet(n);
 
             for (i = 0; i < m; i++) {
-                operation = scanner.next("[\\w]+");
+                operation = scanner.next();
                 a = scanner.nextInt();
                 b = scanner.nextInt();
 
