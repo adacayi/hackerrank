@@ -20,10 +20,11 @@ public class Java1DArrayPart2 {
                     continue;
                 }
 
-                if (leap == l && array[l - 1] == 0) {
+                if (leap == l - 1 && array[l - 1] == 0) {
                     System.out.println("YES");
                     continue;
                 }
+
                 for (j = 1; j < l - leap; j++) {
                     if (array[j] != 0)
                         continue;
