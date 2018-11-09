@@ -7,8 +7,7 @@ public class DeterminingDNAHealth {
         Gene[] result = new Gene[n];
         for (i = 0; i < n; i++)
             result[i] = new Gene(geneStrings[i], healths[i], false, i);
-        Arrays.sort(result, Comparator.nullsFirst(Comparator.comparing((Gene x) ->
-                x == null || x.name == null || x.name.length == 0 ? null : x.name[0])).thenComparing(Gene::getIndex));
+        Arrays.sort(result, Comparator.nullsFirst(Comparator.comparing(Gene::getNameString)).thenComparing(Gene::getIndex));
         for (i = 0; i < n - 1; i++)
             if (Arrays.equals(result[i].name, result[i + 1].name))
                 result[i].isNextSame = true;
@@ -17,10 +16,15 @@ public class DeterminingDNAHealth {
     }
 
     public static class Gene {
+        private String nameString;
         private char[] name;
         private int health;
         private boolean isNextSame;
         private int index;
+
+        public String getNameString() {
+            return nameString;
+        }
 
         public char[] getName() {
             return name;
@@ -42,8 +46,9 @@ public class DeterminingDNAHealth {
             isNextSame = nextSame;
         }
 
-        public Gene(String name, int health, boolean isNextSame, int index) {
-            this.name = name.toCharArray();
+        public Gene(String nameString, int health, boolean isNextSame, int index) {
+            this.name = nameString.toCharArray();
+            this.nameString = nameString;
             this.health = health;
             this.isNextSame = isNextSame;
             this.index = index;
@@ -124,8 +129,8 @@ public class DeterminingDNAHealth {
         try (Scanner scanner = new Scanner(System.in)) {
             scanner.nextInt();
             scanner.nextLine();
-            geneStrings = scanner.nextLine().split("\\s");
-            healths = Arrays.stream(scanner.nextLine().split("\\s")).mapToInt(Integer::parseInt).toArray();
+            geneStrings = scanner.nextLine().split(" ");
+            healths = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
             m = scanner.nextInt();
             genes = getGenes(geneStrings, healths);
 
@@ -157,9 +162,15 @@ public class DeterminingDNAHealth {
 
                 if (start > gene.index || end < gene.index)
                     continue;
+
                 for (k = 0; k < gene.name.length && i + k < l && strandArray[i + k] == gene.name[k]; k++) ;
-                if (k != gene.name.length)
+
+                if (k != gene.name.length) {
+                    for (; j < n && genes[j].isNextSame; j++) ;
+                    if (i + k < l && strandArray[i + k] < gene.name[k])
+                        break;
                     continue;
+                }
 
                 do {
                     value += genes[j].health;

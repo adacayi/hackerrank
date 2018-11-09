@@ -43,6 +43,16 @@ public class DeterminingDNAHealthTest {
     }
 
     @Test
+    public void should_Return_19_When_Find_Health() {
+        long expected = 19;
+        DeterminingDNAHealth.Gene[] genes = DeterminingDNAHealth.getGenes(
+                new String[]{"a", "b", "c", "aa", "d", "b"}, new int[]{1, 2, 3, 4, 5, 6});
+        long actual = DeterminingDNAHealth.findHealth(1, 5, "caaab",
+                genes);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void should_Return_0_19_When_Main() {
         String input = "6\n" +
                 "a b c aa d b\n" +
@@ -81,16 +91,6 @@ public class DeterminingDNAHealthTest {
             String actual = outputStream.toString().trim();
             assertEquals(expected, actual);
         }
-    }
-
-    @Test
-    public void should_Return_19_When_Find_Health() {
-        long expected = 19;
-        DeterminingDNAHealth.Gene[] genes = DeterminingDNAHealth.getGenes(
-                new String[]{"a", "b", "c", "aa", "d", "b"}, new int[]{1, 2, 3, 4, 5, 6});
-        long actual = DeterminingDNAHealth.findHealth(1, 5, "caaab",
-                genes);
-        assertEquals(expected, actual);
     }
 
     @Test
